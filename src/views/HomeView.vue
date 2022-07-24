@@ -1,18 +1,27 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    {{usuarios}}
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import getUsers from '@/services/userService'
 
 export default {
   name: 'HomeView',
+  data: function () {
+    return {
+      usuarios: {},
+      msg: 'Hola mundo'
+    }
+  },
   components: {
-    HelloWorld
+    
+  },
+  mounted () {
+    getUsers().then((response) => {
+      this.usuarios = response
+    });
   }
 }
 </script>
