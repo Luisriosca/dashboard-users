@@ -1,27 +1,15 @@
 <template>
-  <div class="home">
-    {{usuarios}}
-  </div>
+  <hello-world />
 </template>
 
 <script>
-import getUsers from '@/services/userService'
+  import HelloWorld from '../components/HelloWorld'
 
-export default {
-  name: 'HomeView',
-  data: function () {
-    return {
-      usuarios: {},
-      msg: 'Hola mundo'
-    }
-  },
-  components: {
-    
-  },
-  mounted () {
-    getUsers().then((response) => {
-      this.usuarios = response
-    });
+  export default {
+    name: 'HomeView',
+
+    components: {
+      HelloWorld,
+    },
   }
-}
 </script>
