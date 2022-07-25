@@ -18,7 +18,6 @@ import getUsers from '@/services/userService';
             
             <v-card>
 
-
               <v-list class="d-flex justify-content-center">
                 <v-list-item-avatar 
                 :size="62"
@@ -32,11 +31,11 @@ import getUsers from '@/services/userService';
 
 
 
-              <v-list class="d-flex justify-content-center" dense>
+              <v-list class="justify-center" dense>
                 <v-list-item>
-                  <v-list-item-content class="align-end">
-                    {{ item.name.first  + ' ' +  item.name.last}}
-                  </v-list-item-content>
+                    <v-list-item-content class="justify-center">
+                      {{ item.name.first  + ' ' +  item.name.last}}
+                    </v-list-item-content>
                 </v-list-item>
               </v-list>
 
@@ -61,7 +60,7 @@ import getUsers from '@/services/userService';
         users: [],
       }
     },
-    mounted: function () {
+    created: function () {
       getUsers().then((response) => {
       this.users = response.data.results
     });
