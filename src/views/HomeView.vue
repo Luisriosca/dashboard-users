@@ -3,7 +3,7 @@ import getUsers from '@/services/userService';
   <div class="dashboard pa-6">
     <h1>This is the dasboard</h1>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate quaerat animi sed praesentium eveniet harum, dolores unde eum, vel, ut minus necessitatibus corporis? Placeat eum accusamus, veritatis rem officiis modi.</p>
-
+    <button class="btn btn-primary">Hola</button>
     <v-data-iterator :items="users">
       <template v-slot:default="props">
         <v-row>
