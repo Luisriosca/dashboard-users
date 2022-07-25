@@ -4,26 +4,51 @@ import getUsers from '@/services/userService';
     <h1>This is the dasboard</h1>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate quaerat animi sed praesentium eveniet harum, dolores unde eum, vel, ut minus necessitatibus corporis? Placeat eum accusamus, veritatis rem officiis modi.</p>
 
-    <div class="row">
-      <div class="col-12 table-responsive">
-        <table class="table">
-          <thead>
-            <tr>Nombre</tr>
-            <tr>Apellido</tr>
-            <tr>Correo</tr>
-          </thead>
-          <tbody>
-            <tr v-for="user in users" :key="user.id.value">
-              <td>{{user.name.first}}</td>
-              <td>{{user.name.last}}</td>
-            </tr>
-          </tbody>
-          <tfoot>
+    <v-data-iterator :items="users">
+      <template v-slot:default="props">
+        <v-row>
+          <v-col
+            v-for="item in props.items"
+            :key="item.id.value"
+            cols="12"
+            sm="6"
+            md="4"
+            lg="3"
+          >
+            
+            <v-card>
 
-          </tfoot>
-        </table>
-      </div>
-    </div>
+
+              <v-list class="d-flex justify-content-center">
+                <v-list-item-avatar 
+                :size="62"
+                > 
+                    <v-img
+                      :alt="`${item.name.first} avatar`"
+                      :src="item.picture.thumbnail"
+                    ></v-img>
+                </v-list-item-avatar>
+              </v-list>
+
+
+
+              <v-list class="d-flex justify-content-center" dense>
+                <v-list-item>
+                  <v-list-item-content class="align-end">
+                    {{ item.name.first  + ' ' +  item.name.last}}
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+
+            </v-card>
+
+          </v-col>
+
+        </v-row>
+
+      </template>
+
+    </v-data-iterator>
   </div>
 </template>
 
@@ -38,7 +63,7 @@ import getUsers from '@/services/userService';
     },
     mounted: function () {
       getUsers().then((response) => {
-      this.usuarios = response
+      this.users = response.data.results
     });
     }
   }
