@@ -3,7 +3,7 @@
     <h1>Users Dashboard</h1>
     <v-container fluid>
       <v-row align="center">
-        <v-col cols="12" sm="1" class="py-2 d-flex justify-content-center">
+        <v-col cols="12" sm="2" class="py-2 d-flex justify-content-center">
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <v-icon color="primary" dark v-bind="attrs" v-on="on" >
@@ -13,7 +13,7 @@
             <span>Select a gender filter</span>
           </v-tooltip>
         </v-col>
-        <v-col cols="12" sm="1" class="py-2">
+        <v-col cols="12" sm="2" class="py-2 d-flex justify-content-center">
     
           <v-btn-toggle v-model="toggleGenderFilter">
             <v-btn @click="filterGender('female')">
@@ -29,6 +29,17 @@
             </v-btn>
     
           </v-btn-toggle>
+        </v-col>
+        
+        <v-col cols="12" sm="2" class="py-2 d-flex justify-content-center">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon color="primary" dark v-bind="attrs" v-on="on" >
+                mdi-human-cane
+              </v-icon>
+            </template>
+            <span>Select for an age range</span>
+          </v-tooltip>
         </v-col>
 
       </v-row>
