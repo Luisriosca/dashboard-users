@@ -1,10 +1,37 @@
-import getUsers from '@/services/userService';
 <template>
   <div class="dashboard pa-6">
-    <h1>This is the dasboard</h1>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate quaerat animi sed praesentium eveniet harum, dolores unde eum, vel, ut minus necessitatibus corporis? Placeat eum accusamus, veritatis rem officiis modi.</p>
-    <button class="btn btn-primary">Hola</button>
-    <v-data-iterator :items="users">
+    <h1>Users Dashboard</h1>
+    <v-container fluid>
+      <v-row align="center">
+        <v-col cols="12" sm="1" class="py-2">
+
+        </v-col>
+        <v-col
+          cols="12"
+          sm="3"
+          class="py-2"
+        >
+    
+          <v-btn-toggle v-model="toggleGenderFilter">
+            <v-btn @click="filterGender('female')">
+              <v-icon>mdi-human-female</v-icon>
+            </v-btn>
+    
+            <v-btn @click="filterGender('male')">
+              <v-icon>mdi-human-male</v-icon>
+            </v-btn>
+    
+            <v-btn @click="filterGender('any')">
+              <v-icon>mdi-human-male-female</v-icon>
+            </v-btn>
+    
+          </v-btn-toggle>
+        </v-col>
+
+      </v-row>
+    </v-container>
+
+    <v-data-iterator :items="dataIterator1">
       <template v-slot:default="props">
         <v-row>
           <v-col
@@ -29,12 +56,18 @@ import getUsers from '@/services/userService';
                 </v-list-item-avatar>
               </v-list>
 
-
-
               <v-list class="justify-center" dense>
                 <v-list-item>
                     <v-list-item-content class="justify-center">
                       {{ item.name.first  + ' ' +  item.name.last}}
+                    </v-list-item-content>
+                </v-list-item>
+              </v-list>
+
+              <v-list class="justify-center" dense>
+                <v-list-item>
+                    <v-list-item-content class="justify-center">
+                      {{item.email}}
                     </v-list-item-content>
                 </v-list-item>
               </v-list>
@@ -58,11 +91,26 @@ import getUsers from '@/services/userService';
     data: function () {
       return {
         users: [],
+        dataIterator1: [],
+        toggleGenderFilter: undefined,
+      }
+    },
+    methods: {
+      filterGender(value){
+        if(value == 'any'){
+          this.dataIterator1 = this.users;
+        } else {
+          const filteredUsers = this.users.filter((item) => {
+            return item.gender == value;
+          });
+          this.dataIterator1 = filteredUsers;
+        }
       }
     },
     created: function () {
       getUsers().then((response) => {
       this.users = response.data.results
+      this.dataIterator1 = this.users;
     });
     }
   }
