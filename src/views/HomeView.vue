@@ -2,7 +2,10 @@
   <div class="dashboard pa-6">
     <h1 class="">Users Dashboard</h1>
     <carousel-alert :content1="alertText1"></carousel-alert>
-    <button class="btn btn-outline-primary " @click="getCsv(dataForDisplay)">Descarga el CSV</button>
+    <div class="container">
+      <button class="btn btn-outline-primary " @click="getCsv(dataForDisplay)">Export to CSV <v-icon>mdi-download-outline</v-icon></button>
+
+    </div>
     
       <div class="row">
 
