@@ -2,7 +2,7 @@
     <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <p class="alert alert-warning w-100">{{content1}}</p>
+                <p class="alert alert-info w-100">{{content1}}</p>
             </div>
         </div>
     </div>

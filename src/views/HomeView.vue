@@ -20,15 +20,15 @@
             </div>
             
             <div class="col-9 d-flex justify-content-center align-item-center">
-              <v-btn-toggle v-model="toggleGenderFilter" >
+              <v-btn-toggle >
   
-                  <v-btn @click="filterGender('female')">
+                  <v-btn @click="toggleGenderValue('female'); nestedFilter()">
                     <v-icon>mdi-human-female</v-icon>
                   </v-btn>
-                  <v-btn @click="filterGender('male')">
+                  <v-btn @click="toggleGenderValue('male'); nestedFilter()">
                     <v-icon>mdi-human-male</v-icon>
                   </v-btn>
-                  <v-btn @click="filterGender('any')">
+                  <v-btn @click="toggleGenderValue('any'); nestedFilter()">
                     <v-icon>mdi-human-male-female</v-icon>
                   </v-btn>
   
@@ -59,7 +59,7 @@
                 :min="min"
                 hide-details
                 class="align-center"
-                @change="filterAge()"
+                @change="nestedFilter()"
               >
                   <template v-slot:prepend>
                     <v-text-field
@@ -69,8 +69,8 @@
                       single-line
                       type="number"
                       :hide-spin-buttons="true"
-                      style="width: 60px"
-                      @mouseup="filterAge();"
+                      style="width: 30px"
+                      @mouseup="nestedFilter()"
                     ></v-text-field>
                   </template>
                   <template v-slot:append>
@@ -80,9 +80,9 @@
                       hide-details
                       single-line
                       type="number"
-                      style="width: 60px"
+                      style="width: 30px"
                       :hide-spin-buttons="true"
-                      @mouseup="filterAge();"
+                      @mouseup="nestedFilter()"
                     ></v-text-field>
                   </template>
               </v-range-slider>
@@ -101,7 +101,7 @@
           label="Select"
           single-line
           class="p-0"
-          @change="imprimir($event)"
+          @change="nestedFilter()"
           ></v-select>
         </div>
       </div>
@@ -128,13 +128,13 @@
       return {
         users: [],
         dataForDisplay: [],
-        toggleGenderFilter: undefined,
+        toggleGenderFilter: 'any',
         min: 18,
         max: 90,
         range: [18, 90],
         itsFilteredGender: false,
-        alertText1: "In this page are displayed all users data. One card for every user. ",
-        selectCountry: 'MX',
+        alertText1: "🧐💡 In this page are displayed all users data. One card for every user.",
+        selectCountry: '',
         countries: ['AU', 'BR', 'CA', 'CH', 'DE', 'DK', 'ES', 'FI', 'FR', 'GB', 'IE', 'IN', 'IR', 'MX', 'NL', 'NO', 'NZ', 'RS', 'TR', 'UA', 'US']
       }
     },
@@ -146,50 +146,58 @@
           this.range[1] =value;
         }
       },
-      filterGender(value){
-        if(value == 'any'){
-          this.dataForDisplay = this.users;
-          this.itsFilteredGender = false;
-        } else {
-          const filteredUsers = this.users.filter((item) => {
-            return item.gender == value;
-          });
-          this.itsFilteredGender = true;
-          this.dataForDisplay = filteredUsers;
-        }
-      },
       genderFilter(arrayUsers, value){
-        if(value == 'any'){
+        console.log('value filter gender: ', value);
+        if(value === 'any'){
+          //console.log('Entra a any');
           return arrayUsers
         } else {
           const filteredUsers = this.users.filter((user) => {
-            return user.gender == value;
+            return user.gender === value;
           });
           return filteredUsers;
         }
       },
-      filterAge(){
-        //console.log(this.range);
-        let data = [];
-        if(this.itsFilteredGender){
-          data = this.dataForDisplay;
-        } else {
-          data = this.users;
-        }
-        //console.log(data);
-        let filterData = data.filter((user) => {
-          return user.registered.age >= this.range[0] && user.registered.age <= this.range[1]
-        });
-        this.dataForDisplay = filterData;
-      },
       ageFilter(array){
+        console.log('Entra a filtro edad', array);
+        console.log(this.range[0], this.range[1]);
         let filterData = array.filter((user) => {
-          return user.registered.age >= this.range[0] && user.registered.age <= this.range[1];
+          return user.dob.age >= this.range[0] && user.dob.age <= this.range[1];
         })
+        console.log('Sale de filtro edad', filterData);
         return filterData;
       },
       countryFilter(array){
-        console.log(array);
+        //console.log('pais:', this.selectCountry);
+        let filterData
+        if(this.selectCountry == '' ){
+          filterData = array;
+          } else {
+          filterData = array.filter((user) => {
+            return user.nat == this.selectCountry;
+          });
+        }
+        return filterData;
+      },
+      nestedFilter(){
+        const array = this.users;
+        const countryFiltered = this.countryFilter(array);
+        let ageFiltered;
+        if(countryFiltered.length > 0 ){
+          ageFiltered =  this.ageFilter(countryFiltered);
+        } else {
+          ageFiltered =  this.ageFilter(array);
+        }
+        //console.log(ageFiltered.length);
+        let genderFiltered;
+        if(ageFiltered.length > 0){
+          genderFiltered = this.genderFilter(ageFiltered, this.toggleGenderFilter)
+        } else {
+          genderFiltered = this.genderFilter(array, this.toggleGenderFilter);
+        }
+        //console.log(genderFiltered.length);
+        //console.log('nested filtered data:', genderFiltered)
+        this.dataForDisplay = genderFiltered;
       },
       imprimir(evento){
         console.log("Evento", evento);
@@ -200,19 +208,23 @@
       },  
       getAges(arrayUsers){
         let ages = arrayUsers.map((user) => {
-          return user.registered.age
+          return user.dob.age
         })
         ages = ages.sort((a,b) => a - b);
         this.min = ages[0];
         this.max = ages[ages.length - 1]
         this.range = [this.min, this.max]
+      },
+      toggleGenderValue(value){
+        this.toggleGenderFilter = value;
+        console.log(this.toggleGenderFilter);
       }
     },
     mounted(){
     },
     created: async function () {
       const results =  await getStoreUsers();
-      console.log(results);
+      //console.log(results);
       this.users = results;
       this.dataForDisplay = this.users;
       this.getAges(this.users);
