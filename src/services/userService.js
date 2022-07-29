@@ -13,7 +13,7 @@ const getUsers = async () => {
     } catch (err) {
         console.error("Error trying get user list", err);
     } */
-    const resp = await axiosInstance.get('https://randomuser.me/api/?results=30&?nat=mx/');
+    const resp = await axiosInstance.get('https://randomuser.me/api/?results=30');
     return (resp);
 };
 

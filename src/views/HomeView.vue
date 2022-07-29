@@ -1,15 +1,14 @@
 <template>
   <div class="dashboard pa-6">
-    <h1 class="btn btn-primary">Users Dashboard</h1>
+    <h1 class="">Users Dashboard</h1>
     
-    <carousel-alert :content1="alertText1" :content2="alertText2" :content3="alertText3"></carousel-alert>
+    <carousel-alert :content1="alertText1"></carousel-alert>
     
       <div class="row">
 
         <div class="col-sm-12 col-md-6 col-lg-3">
           <div class="row">
             <div class="col-3 d-flex justify-content-center align-item-center">
-
               <v-tooltip bottom >
                   <template v-slot:activator="{ on, attrs }">
                     <v-icon color="primary" dark v-bind="attrs" v-on="on" >
@@ -39,10 +38,10 @@
 
         </div>
   
-        <div class="col-sm-12 col-md-6 col-lg-3 d-flex justify-content-around align-items-center">
+        <div class="col-sm-12 col-md-6 col-lg-5 d-flex justify-content-around align-items-center">
           <div class="row">
             
-            <div class="col-2 d-flex justify-content-center align-items-center">
+            <div class="col-3 d-flex justify-content-center align-items-center">
               <v-tooltip bottom>
                 <template v-slot:activator="{ on, attrs }">
                   <v-icon color="primary" dark v-bind="attrs" v-on="on" >
@@ -53,7 +52,7 @@
               </v-tooltip>
             </div>
 
-            <div class="col-10 d-flex justify-content-center align-items-center">
+            <div class="col-9 d-flex justify-content-center align-items-center">
               <v-range-slider
                 v-model="range"
                 :max="max"
@@ -92,6 +91,18 @@
           </div>
         </div>
 
+        <div class="col-sm-12 col-md-6 col-lg-4 d-flex justify-content-center align-items-center p-md-4">
+          <v-select
+          v-model="selectCountry"
+          :items="countries"
+          append-outer-icon="mdi-map"
+          menu-props="auto"
+          hide-details
+          label="Select"
+          single-line
+          class="p-0"
+          ></v-select>
+        </div>
       </div>
 
     <data-iterator :dataIterator1="dataForDisplay"></data-iterator>
@@ -121,8 +132,8 @@
         range: [18, 90],
         itsFilteredGender: false,
         alertText1: "In this page are displayed all users data. One card for every user. ",
-        alertText2: "For using the filtering options, you can press a gender button, select a range using the slider or clicking on an item of the country list.",
-        alertText3: "https://github.com/Luisriosca",
+        selectCountry: null,
+        countries: ['AU', 'BR', 'CA', 'CH', 'DE', 'DK', 'ES', 'FI', 'FR', 'GB', 'IE', 'IN', 'IR', 'MX', 'NL', 'NO', 'NZ', 'RS', 'TR', 'UA', 'US']
       }
     },
     methods: {

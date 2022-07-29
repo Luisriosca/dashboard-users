@@ -4,12 +4,6 @@
             <div class="carousel-item active">
                 <p class="alert alert-warning w-100">{{content1}}</p>
             </div>
-            <div class="carousel-item">
-                <p class="alert alert-warning w-100">{{content2}}</p>
-            </div>
-            <div class="carousel-item">
-                <p class="alert alert-warning w-100">{{content3}}</p>
-            </div>
         </div>
     </div>
 </template>
