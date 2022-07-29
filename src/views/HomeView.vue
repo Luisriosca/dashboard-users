@@ -1,8 +1,8 @@
 <template>
   <div class="dashboard pa-6">
     <h1 class="">Users Dashboard</h1>
-    
     <carousel-alert :content1="alertText1"></carousel-alert>
+    <button class="btn btn-outline-primary " @click="getCsv(dataForDisplay)">Descarga el CSV</button>
     
       <div class="row">
 
@@ -117,7 +117,7 @@
   import CarouselAlert from '@/components/CarouselAlert.vue';
   import DataIterator from '@/components/DataIterator.vue';
   import { getStoreUsers } from '../services/userService';
-
+  import getCsvFile from '../services/csvService'
   export default {
     name: 'HomeView',
     components: {
@@ -195,6 +195,9 @@
         console.log("Evento", evento);
         console.log("Selected", this.selectCountry);
       },
+      getCsv(data){
+        getCsvFile(data, 'allUsers.csv')
+      },  
       getAges(arrayUsers){
         let ages = arrayUsers.map((user) => {
           return user.registered.age
