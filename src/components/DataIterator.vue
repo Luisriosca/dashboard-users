@@ -47,7 +47,7 @@ export default {
     methods: {
     },
     props: {
-        dataIterator1: Object,
+        dataIterator1: [],
     }
 }
 </script>
