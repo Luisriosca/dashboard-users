@@ -52,7 +52,7 @@
               </v-tooltip>
             </div>
 
-            <div class="col-9 d-flex justify-content-center align-items-center">
+            <div class="col-7 d-flex justify-content-center align-items-center">
               <v-range-slider
                 v-model="range"
                 :max="max"
@@ -101,6 +101,7 @@
           label="Select"
           single-line
           class="p-0"
+          @change="imprimir($event)"
           ></v-select>
         </div>
       </div>
@@ -111,10 +112,11 @@
 </template>
 
 <script>
-  import getUsers from '../services/userService' 
+  //import getUsers from '../services/userService' 
 
   import CarouselAlert from '@/components/CarouselAlert.vue';
   import DataIterator from '@/components/DataIterator.vue';
+  import { getStoreUsers } from '../services/userService';
 
   export default {
     name: 'HomeView',
@@ -132,7 +134,7 @@
         range: [18, 90],
         itsFilteredGender: false,
         alertText1: "In this page are displayed all users data. One card for every user. ",
-        selectCountry: null,
+        selectCountry: 'MX',
         countries: ['AU', 'BR', 'CA', 'CH', 'DE', 'DK', 'ES', 'FI', 'FR', 'GB', 'IE', 'IN', 'IR', 'MX', 'NL', 'NO', 'NZ', 'RS', 'TR', 'UA', 'US']
       }
     },
@@ -156,37 +158,62 @@
           this.dataForDisplay = filteredUsers;
         }
       },
+      genderFilter(arrayUsers, value){
+        if(value == 'any'){
+          return arrayUsers
+        } else {
+          const filteredUsers = this.users.filter((user) => {
+            return user.gender == value;
+          });
+          return filteredUsers;
+        }
+      },
       filterAge(){
-        console.log(this.range);
+        //console.log(this.range);
         let data = [];
         if(this.itsFilteredGender){
           data = this.dataForDisplay;
         } else {
           data = this.users;
         }
-        console.log(data);
+        //console.log(data);
         let filterData = data.filter((user) => {
           return user.registered.age >= this.range[0] && user.registered.age <= this.range[1]
         });
         this.dataForDisplay = filterData;
       },
+      ageFilter(array){
+        let filterData = array.filter((user) => {
+          return user.registered.age >= this.range[0] && user.registered.age <= this.range[1];
+        })
+        return filterData;
+      },
+      countryFilter(array){
+        console.log(array);
+      },
+      imprimir(evento){
+        console.log("Evento", evento);
+        console.log("Selected", this.selectCountry);
+      },
       getAges(arrayUsers){
-        return arrayUsers.map((user) => {
+        let ages = arrayUsers.map((user) => {
           return user.registered.age
         })
-      }
-    },
-    created: function () {
-      getUsers().then((response) => {
-        this.users = response.data.results
-        this.dataForDisplay = this.users;
-        console.log(response.data.results);
-        let ages = this.getAges(this.users);
         ages = ages.sort((a,b) => a - b);
         this.min = ages[0];
         this.max = ages[ages.length - 1]
         this.range = [this.min, this.max]
-      });
+      }
+    },
+    mounted(){
+    },
+    created: async function () {
+      const results =  await getStoreUsers();
+      console.log(results);
+      this.users = results;
+      this.dataForDisplay = this.users;
+      this.getAges(this.users);
+      
     }
   }
 </script>

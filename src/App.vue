@@ -1,5 +1,3 @@
-import CarouselAlertVue from '@/components/CarouselAlert.vue';
-
 <template>
   <v-app id="inspire">
     <v-navigation-drawer v-model="drawer" app >
@@ -57,6 +55,8 @@ import CarouselAlertVue from '@/components/CarouselAlert.vue';
 </template>
 
 <script>
+  import getUsers from './services/userService'
+
   export default {
     data: () => ({ 
       drawer: null,
@@ -68,5 +68,8 @@ import CarouselAlertVue from '@/components/CarouselAlert.vue';
       ] 
     }),
     components: {  },
+    mounted(){
+      getUsers()
+    }
 }
 </script>
