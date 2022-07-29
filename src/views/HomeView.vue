@@ -1,7 +1,10 @@
 <template>
   <div class="dashboard pa-6">
-    <h1>Users Dashboard</h1>
-
+    <h1 class="btn btn-primary">Users Dashboard</h1>
+    
+    <carousel-alert :content1="alertText1" :content2="alertText2" :content3="alertText3"></carousel-alert>
+    
+    
     <v-container fluid>
 
       <div class="row">
@@ -79,7 +82,8 @@
       </div>
     </v-container>
 
-    <v-data-iterator :items="dataIterator1">
+    <data-iterator :dataIterator1="dataForDisplay"></data-iterator>
+    <!-- <v-data-iterator :items="dataIterator1">
       <template v-slot:default="props">
         <v-row>
           <v-col
@@ -128,23 +132,34 @@
 
       </template>
 
-    </v-data-iterator>
+    </v-data-iterator> -->
   </div>
 </template>
 
 <script>
   import getUsers from '../services/userService' 
+
+  import CarouselAlert from '@/components/CarouselAlert.vue';
+  import DataIterator from '@/components/DataIterator.vue';
+
   export default {
     name: 'HomeView',
+    components: {
+    CarouselAlert,
+    DataIterator
+},
     data: function () {
       return {
         users: [],
-        dataIterator1: [],
+        dataForDisplay: [],
         toggleGenderFilter: undefined,
         min: 18,
         max: 90,
         range: [18, 90],
-        itsFilteredGender: false
+        itsFilteredGender: false,
+        alertText1: "In this page are displayed all users data. One card for every user. ",
+        alertText2: "For using the filtering options, you can press a gender button, select a range using the slider or clicking on an item of the country list.",
+        alertText3: "https://github.com/Luisriosca",
       }
     },
     methods: {
@@ -157,21 +172,21 @@
       },
       filterGender(value){
         if(value == 'any'){
-          this.dataIterator1 = this.users;
+          this.dataForDisplay = this.users;
           this.itsFilteredGender = false;
         } else {
           const filteredUsers = this.users.filter((item) => {
             return item.gender == value;
           });
           this.itsFilteredGender = true;
-          this.dataIterator1 = filteredUsers;
+          this.dataForDisplay = filteredUsers;
         }
       },
       filterAge(){
         console.log(this.range);
         let data = [];
         if(this.itsFilteredGender){
-          data = this.dataIterator1;
+          data = this.dataForDisplay;
         } else {
           data = this.users;
         }
@@ -179,7 +194,7 @@
         let filterData = data.filter((user) => {
           return user.registered.age >= this.range[0] && user.registered.age <= this.range[1]
         });
-        this.dataIterator1 = filterData;
+        this.dataForDisplay = filterData;
       },
       getAges(arrayUsers){
         return arrayUsers.map((user) => {
@@ -190,7 +205,7 @@
     created: function () {
       getUsers().then((response) => {
         this.users = response.data.results
-        this.dataIterator1 = this.users;
+        this.dataForDisplay = this.users;
         console.log(response.data.results);
         let ages = this.getAges(this.users);
         ages = ages.sort((a,b) => a - b);

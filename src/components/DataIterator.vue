@@ -38,6 +38,16 @@
 </template>
 
 <script>
-    
+export default { 
+    data() {
+        return {
 
+        }
+    },
+    methods: {
+    },
+    props: {
+        dataIterator1: Object,
+    }
+}
 </script>
