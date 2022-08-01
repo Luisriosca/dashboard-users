@@ -3,9 +3,7 @@ Welcome to Fake Users Dashboard by Luisriosca.🙌🏻
 
 This project was developed using Vue.js in 2.6.14 version.
 
-The current Vue release version is 3 but for UI porpouse was used Vue 2 for the vuetify complete compatibility.
-
-For more information you can visit [Vuetify official installation section ↗️](https://vuetifyjs.com/en/getting-started/installation/)
+The current Vue release version is 3 but for UI porpouse was used Vue 2 for the vuetify complete compatibility. For more information about the integration of Vuetify and Vue you can visit [Vuetify official installation section ↗️](https://vuetifyjs.com/en/getting-started/installation/)
 
 **If you want to preview this app deployed you can visit** [this URL↗️](https://dashboard-users-luisrioscode.netlify.app/)
 ## Project setup
