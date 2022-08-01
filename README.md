@@ -1,7 +1,7 @@
 # Fake Users Dashboard
 Welcome to Fake Users Dashboard by Luisriosca.🙌🏻
 
-This project was developed using Vue.js in 2.6.14 version.
+This project was developed using Vue.js in 2.6.14 version and it's currently on development.
 
 The current Vue release version is 3 but for UI porpouse was used Vue 2 for the vuetify complete compatibility. For more information about the integration of Vuetify and Vue you can visit [Vuetify official installation section ↗️](https://vuetifyjs.com/en/getting-started/installation/)
 
@@ -24,14 +24,16 @@ npm run build
 To create a build for production. 
 
 *The production version of this project was deployed using netlify. For simplicity netlify create a prod build using this line.*
-### Lints and fixes files
-```
-npm run lint
-```
+## Dependencies
+### For logic
+* Axios - 0.27.2
+* Json2csv - 5.0.7
+* Json-to-csv-export - 1.1.0   ( **delete** )
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### For UI develop
+* Vuetify - 2.6.7
+* Bootsrap - 4.6.1 
 
-
-### THE AMAZING PARSE OBJECT FOR THE CSV CONVERTION
-https://stackoverflow.com/questions/44134212/best-way-to-flatten-js-object-keys-and-values-to-a-single-depth-array
+### For Core
+* Vue router -  3.5.1
+* Vuex - 3.6.2  ( **delete** )
