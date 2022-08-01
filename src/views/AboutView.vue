@@ -1,7 +1,7 @@
 <template>
   <div class="about pa-6">
     <h1>README.md</h1>
-    <div class="container">
+    <div class="container alert alert-success">
       <div v-html="markdownToHtml">
       </div>
     </div>
