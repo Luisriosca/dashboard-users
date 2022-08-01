@@ -21,19 +21,21 @@ For run a live local server for this project.
 ```
 npm run build
 ```
-To create a build for production. 
 
 *The production version of this project was deployed using netlify. For simplicity netlify create a prod build using this line.*
 ## Dependencies
-### For logic
+### For logic 🧑🏻‍💻
 * Axios - 0.27.2
 * Json2csv - 5.0.7
 * Json-to-csv-export - 1.1.0   ( **delete** )
 
-### For UI develop
+### For UI develop 👾
 * Vuetify - 2.6.7
 * Bootsrap - 4.6.1 
 
-### For Core
+### For Core 🕹
 * Vue router -  3.5.1
 * Vuex - 3.6.2  ( **delete** )
+
+### For documentation 📝
+* Marked - 4.0.18
